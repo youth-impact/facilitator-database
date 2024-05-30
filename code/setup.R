@@ -18,11 +18,14 @@ gs4_auth(token = drive_token())
 ########################################
 
 # used by [update_views()]
-get_params = function() {
-  params_raw = read_yaml(file.path('params', 'params.yaml'))
-  envir = Sys.getenv('ENVIRONMENT')
+get_params = function(path = 'params.yaml') {
+  params_raw = read_yaml(path)
+  country = Sys.getenv('FAC_DB_COUNTRY')
+  envir = Sys.getenv('FAC_DB_ENVIRONMENT')
+
+  if (!(country %in% names(params_raw))) country = names(params_raw)[1L]
   if (envir != 'production') envir = 'testing'
-  params = params_raw[[envir]]
+  params = params_raw[[country]][[envir]]
 
   params$view_sheet_name = 'Cases'
   params$preferred_date_format = '%d-%b-%Y'
