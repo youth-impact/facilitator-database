@@ -35,7 +35,8 @@ function at_change(e) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var gh = get_params(ss, 'github');
   var ref = gh['environment'] == 'production' ? 'main' : 'testing';
-  var inputs = {'ref': ref, 'environment': gh['environment']};
+  var inputs = {
+    'ref': ref, 'environment': gh['environment'], 'country': gh['country']};
 
   Logger.log(e.authMode);
   Logger.log(e.changeType);
