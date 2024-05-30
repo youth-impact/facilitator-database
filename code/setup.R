@@ -9,7 +9,7 @@ library('yaml')
 ########################################
 
 if (Sys.getenv('GOOGLE_TOKEN') == '') { # not on GitHub
-  drive_auth(email = 'youthimpactautomation@gmail.com')
+  drive_auth(email = 'data-traffic@youth-impact.org')
 } else { # on GitHub Actions runner
   drive_auth(path = Sys.getenv('GOOGLE_TOKEN'))
 }
@@ -23,6 +23,10 @@ get_params = function() {
   envir = Sys.getenv('ENVIRONMENT')
   if (envir != 'production') envir = 'testing'
   params = params_raw[[envir]]
+
+  params$view_sheet_name = 'Cases'
+  params$preferred_date_format = '%d-%b-%Y'
+  params
 }
 
 ########################################

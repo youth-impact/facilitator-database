@@ -42,7 +42,7 @@ jobs:
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: Youth Impact ${{ github.event.repository.name }} ${{ inputs.environment }}
           to: ${{ env.EMAIL_TO }}
-          from: Youth Impact Automation <youthimpactautomation@gmail.com>
+          from: Youth Impact Data Traffic
           body: |
             Hello there!
 
@@ -54,4 +54,4 @@ jobs:
             ${{ env.FILE_URL }}
 
             Take care,
-            Youth Impact Automation
+            Youth Impact Data Traffic
