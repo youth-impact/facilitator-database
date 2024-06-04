@@ -8,27 +8,29 @@ library('yaml')
 
 ########################################
 
-if (Sys.getenv('GOOGLE_TOKEN') == '') { # not on GitHub
-  drive_auth(email = 'data-traffic@youth-impact.org')
-} else { # on GitHub Actions runner
-  drive_auth(path = Sys.getenv('GOOGLE_TOKEN'))
+set_auth = function(filename = 'google_token.json') {
+  google_token = if (Sys.getenv('GOOGLE_TOKEN') == '') { # not on GitHub
+    file.path('secrets', filename)
+  } else { # on GitHub Actions runner
+    Sys.getenv('GOOGLE_TOKEN')
+  }
+  drive_auth(path = google_token)
+  gs4_auth(token = drive_token())
 }
-gs4_auth(token = drive_token())
 
 ########################################
 
 # used by [update_views()]
 get_params = function(path = 'params.yaml') {
   params_raw = read_yaml(path)
+  params_all = params_raw$all
+  params_raw$all = NULL
   country = Sys.getenv('FAC_DB_COUNTRY')
   envir = Sys.getenv('FAC_DB_ENVIRONMENT')
 
   if (!(country %in% names(params_raw))) country = names(params_raw)[1L]
   if (envir != 'production') envir = 'testing'
-  params = params_raw[[country]][[envir]]
-
-  params$view_sheet_name = 'Cases'
-  params$preferred_date_format = '%d-%b-%Y'
+  params = c(params_raw[[country]][[envir]], params_all)
   params
 }
 
@@ -104,8 +106,6 @@ fix_dates = function(d, date_colnames, preferred_date_format) {
 #' Read multiple worksheets from a Google Sheet
 #'
 #' @param file_id A `drive_id` corresponding to a Google Sheet.
-#' @param date_colnames A character vector of column names in the `data`
-#'   worksheet that contains dates.
 #' @param preferred_date_format A string, see [strptime()].
 #' @param sheets A character vector of names of worksheets in the Google Sheet
 #'   to be read in as `data.table`s.
@@ -121,22 +121,32 @@ get_tables = function(
   assert_class(file_id, 'drive_id')
   assert_character(sheets, any.missing = FALSE)
 
-  tables = lapply(sheets, \(x) setDT(read_sheet(file_id, x, guess_max = Inf)))
+  sheets_existing = sheet_properties(file_id)$name
+  tables = lapply(sheets, \(x) {
+    if (x %in% sheets_existing) {
+      setDT(read_sheet(file_id, x, guess_max = Inf))
+    } else {
+      data.table()
+    }
+  })
   names(tables) = sheets
 
-  if (nrow(tables$show_columns) > 0) {
+  if ('show_columns' %in% names(tables) && nrow(tables$show_columns) > 0) {
     # if no column label specified, just use the column name
     tables$show_columns[is.na(column_label), column_label := column_name]
   }
-  # omit rows with missing values, which typically correspond to group headers
-  tables$viewers = unique(na.omit(tables$viewers))
+  if ('viewers' %in% names(tables) && nrow(tables$viewers) > 0) {
+    # omit rows with missing values, which typically correspond to group headers
+    tables$viewers = unique(na.omit(tables$viewers))
+  }
 
   # using this table before checking its validity
-  if ('column_name' %in% colnames(tables$date_columns)) {
+  if ('date_columns' %in% names(tables) &&
+      'column_name' %in% colnames(tables$date_columns)) {
     tables$date_columns[, column_name := as.character(column_name)]
   }
 
-  if (nrow(tables$data) > 0) {
+  if ('data' %in% names(tables) && nrow(tables$data) > 0) {
     # omit rows lacking an id, typically for former facilitators
     tables$data = tables$data[!is.na(id)]
     # deal with messy dates
@@ -533,57 +543,6 @@ sheets_get_background = function(file_id, sheet, range, nonwhite = TRUE) {
   if (nonwhite) bg = bg[!(red == 1 & green == 1 & blue == 1)]
   bg
 }
-
-#' Set background colors in columns of a Google Sheet
-#'
-#' This function constructs a JSON string, then makes and sends a Google Sheets
-#' API request.
-#'
-#' @param file_id A `drive_id` corresponding to a Drive file.
-#' @param background A `data.table` having columns `start_col`, `red`, `green`,
-#'   and `blue`.
-#' @param sheet A string indicating the worksheet name in the Google Sheet.
-#'
-#' @return The result of [googlesheets4::request_make()], invisibly.
-# drive_set_background = function(file_id, background, sheet) {
-#   assert_class(file_id, 'drive_id')
-#   assert_data_table(background)
-#
-#   gfile = gs4_get(file_id)
-#   cli_alert_success('Setting background colors for "{gfile$name}".')
-#
-#   # only for setting one color per entire column
-#   bod_base = '{
-#   "repeatCell": {
-#     "range": {
-#       "sheetId": (sheet_id),
-#       "startColumnIndex": (start_col),
-#       "endColumnIndex": (start_col + 1)
-#     },
-#     "cell": {
-#       "userEnteredFormat": {
-#         "backgroundColor": {
-#           "red": (red),
-#           "green": (green),
-#           "blue": (blue)
-#         }
-#       }
-#     },
-#     "fields": "userEnteredFormat.backgroundColor"
-#     }
-#   }'
-#
-#   background = copy(background)
-#   background[, sheet_id := gfile$sheets$id[gfile$sheets$name == sheet]]
-#   background[, bod := glue(bod_base, .envir = .SD, .open = '(', .close = ')')]
-#   bod = sprintf('{"requests": [%s]}', paste(background$bod, collapse = ',\n'))
-#
-#   request = googlesheets4::request_generate(
-#     'sheets.spreadsheets.batchUpdate', list(spreadsheetId = file_id))
-#   request$body = bod
-#   result = googlesheets4::request_make(request)
-#   invisible(result)
-# }
 
 ########################################
 
