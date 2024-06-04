@@ -1,6 +1,7 @@
 source(file.path('code', 'setup.R'))
 
 msg = tryCatch({
+  set_auth()
   params = get_params()
   update_views(params)
   },

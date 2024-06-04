@@ -31,17 +31,12 @@ function get_params(ss, sheet_name, key_idx = 0, val_idx = 1) {
   return p;
 }
 
-function at_change(e) {
+function at_change() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var gh = get_params(ss, 'github');
   var ref = gh['environment'] == 'production' ? 'main' : 'testing';
   var inputs = {
     'ref': ref, 'environment': gh['environment'], 'country': gh['country']};
-
-  Logger.log(e.authMode);
-  Logger.log(e.changeType);
-  Logger.log(e.user.getEmail());
-
   if (gh['enabled'] == 1) {
     dispatch(gh['repo_url'], gh['pat_url'], inputs);
   }
