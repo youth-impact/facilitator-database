@@ -623,7 +623,7 @@ sort_dataset = function(dataset, sorting) {
   dataset = copy(dataset)
 
   if (nrow(sorting) == 0L) return(dataset)
-  
+
   # for specified sorting orders, create factors
   special = c('*ascending*', '*descending*')
   cols_tmp = unique(sorting[!(column_value %in% special)]$column_name)
@@ -707,7 +707,7 @@ set_views = function(x, bg, prefix, sheet) {
     group_id_now = x$groups$group_id[i]
 
     # rename file
-    drive_rename(file_id, glue('{prefix}_{group_id_now}'), overwrite = TRUE)
+    drive_rename(file_id, glue('{prefix}-{group_id_now}'), overwrite = TRUE)
 
     # update contents
     dataset_now = get_filtered_dataset(dataset, x$hide_rows, group_id_now)
