@@ -1,3 +1,3 @@
-# facilitator_database
+# facilitator-database
 
-See the [Wiki](https://github.com/youth-impact/facilitator_database/wiki) for documentation.
+See the [Wiki](https://github.com/youth-impact/facilitator-database/wiki) for documentation.
