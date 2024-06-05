@@ -8,7 +8,7 @@ library('yaml')
 
 ########################################
 
-set_auth = function(filename = 'google_token.json') {
+set_auth = function(filename = 'google-token.json') {
   google_token = if (Sys.getenv('GOOGLE_TOKEN') == '') { # not on GitHub
     file.path('secrets', filename)
   } else { # on GitHub Actions runner
