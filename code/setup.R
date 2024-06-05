@@ -622,6 +622,8 @@ sort_dataset = function(dataset, sorting) {
   assert_data_table(sorting)
   dataset = copy(dataset)
 
+  if (nrow(sorting) == 0L) return(dataset)
+  
   # for specified sorting orders, create factors
   special = c('*ascending*', '*descending*')
   cols_tmp = unique(sorting[!(column_value %in% special)]$column_name)
