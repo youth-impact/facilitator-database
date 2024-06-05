@@ -8,3 +8,10 @@ Botswana:
   testing:
     main_file_url: https://docs.google.com/spreadsheets/d/1yeyxR85D4sg8v6TegPEuaPqVTQUvjIN2_VAzR16zJWI
     mirror_file_url: https://docs.google.com/spreadsheets/d/1VkyJJPM2fl6cWaiJW8aZ742QFPk9P1dH9AV2dnjcii8
+Westeros:
+  production:
+    main_file_url: https://docs.google.com/spreadsheets/d/1_GLVf0l2-aYwLF_livRpcnkPSdzDOyIvRMmxvm02tM4
+    mirror_file_url: https://docs.google.com/spreadsheets/d/1dqHj2MVK1QD-OnwgIj07fE3pqPVSRQDZ7153UVj737M
+  testing:
+    main_file_url: https://docs.google.com/spreadsheets/d/1f_re5Rk1fA9IHlwMht7Xv5invAnZKSbEVSLWp0w3M8Q
+    mirror_file_url: https://docs.google.com/spreadsheets/d/1zC2DdrnOhZqi3bm5p-h8eanS_02mxgX8r04hVhCND8M
