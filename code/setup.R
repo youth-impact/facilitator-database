@@ -741,6 +741,18 @@ set_views = function(x, bg, prefix, sheet) {
   invisible(ans)
 }
 
+get_comma_string = function(x) {
+  n = length(x)
+  y = if (n <= 1L) {
+    x
+  } else if (n == 2L) {
+    paste(x, collapse = ' and ')
+  } else {
+    paste0(paste(x[-n], collapse = ', '), ', and ', x[n])
+  }
+  y
+}
+
 ########################################
 
 #' Update the Google Sheets comprising the facilitator database
@@ -799,7 +811,7 @@ update_views = function(params) {
     msg = 'Successfully updated views, although no changes detected.'
     cli_alert_success(msg)
   } else {
-    msg_end = paste(names(tables_eq)[!tables_eq], collapse = ', ')
+    msg_end = get_comma_string(names(tables_eq)[!tables_eq])
     msg = glue('Successfully updated views based on changes to {msg_end}.')
     cli_alert_success(msg)
   }
