@@ -15,3 +15,10 @@ Westeros:
   testing:
     main_file_url: https://docs.google.com/spreadsheets/d/1f_re5Rk1fA9IHlwMht7Xv5invAnZKSbEVSLWp0w3M8Q
     mirror_file_url: https://docs.google.com/spreadsheets/d/1zC2DdrnOhZqi3bm5p-h8eanS_02mxgX8r04hVhCND8M
+SouthAfrica:
+  production:
+    main_file_url: https://docs.google.com/spreadsheets/d/1Ro8ymy5EpkyuhaaOnoHMbxcDnNjAxsPSWEeARiVV7pg/edit?gid=1404189001#gid=1404189001
+    mirror_file_url: https://docs.google.com/spreadsheets/d/1Al6TYdz-A5HmXjTCDxM2SRmoPpVD1DdfJrXDCThTjkw/edit?gid=0#gid=0
+  testing:
+    main_file_url: https://docs.google.com/spreadsheets/d/1OHeH4xh0IGCwX8G6iTfrbc9xEOGMCgHe218Yqcjcch4/edit?gid=1664730797#gid=1664730797
+    mirror_file_url: https://docs.google.com/spreadsheets/d/18y-2Nx5EP99ScPx7Gf-xidzylUxJbCPXe9SlIr-UbKc/edit?gid=0#gid=0
