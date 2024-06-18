@@ -21,16 +21,18 @@ set_auth = function(filename = 'google-token.json') {
 ########################################
 
 # used by [update_views()]
-get_params = function(path = 'params.yaml') {
+get_params = function(
+    path = 'params.yaml', country = Sys.getenv('FAC_DB_COUNTRY'),
+    envir = Sys.getenv('FAC_DB_ENVIRONMENT')) {
   params_raw = read_yaml(path)
-  params_all = params_raw$all
-  params_raw$all = NULL
-  country = Sys.getenv('FAC_DB_COUNTRY')
-  envir = Sys.getenv('FAC_DB_ENVIRONMENT')
+  countries = sapply(params_raw$systems, \(x) x$country)
+  envirs = sapply(params_raw$systems, \(x) x$environment)
 
-  if (!(country %in% names(params_raw))) country = names(params_raw)[1L]
+  if (!(country %in% countries)) country = countries[1L]
   if (envir != 'production') envir = 'testing'
-  params = c(params_raw[[country]][[envir]], params_all)
+  params = c(
+    params_raw$systems[country == countries & envir == envirs][[1L]],
+    params_raw$all)
   params
 }
 
