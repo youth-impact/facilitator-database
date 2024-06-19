@@ -25,4 +25,4 @@ systems:
   - country: SouthAfrica
     environment: testing
     main_file_url: https://docs.google.com/spreadsheets/d/1OHeH4xh0IGCwX8G6iTfrbc9xEOGMCgHe218Yqcjcch4
-    mirror_file_url: https://docs.google.com/spreadsheets/d/18y-2Nx5EP99ScPx7Gf-xidzylUxJbCPXe9SlIr-UbK
+    mirror_file_url: https://docs.google.com/spreadsheets/d/18y-2Nx5EP99ScPx7Gf-xidzylUxJbCPXe9SlIr-UbKc
