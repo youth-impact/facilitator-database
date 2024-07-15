@@ -26,4 +26,11 @@ systems:
     environment: testing
     main_file_url: https://docs.google.com/spreadsheets/d/1OHeH4xh0IGCwX8G6iTfrbc9xEOGMCgHe218Yqcjcch4
     mirror_file_url: https://docs.google.com/spreadsheets/d/18y-2Nx5EP99ScPx7Gf-xidzylUxJbCPXe9SlIr-UbKc
-    
+  - country: Namibia
+    environment: production
+    main_file_url: https://docs.google.com/spreadsheets/d/1TW1JHxJcpkDkcMmWQcinxDWBcgSEiQ71DesH53E8M1U
+    mirror_file_url: https://docs.google.com/spreadsheets/d/1NBRqtL_EVCab2aTKdno52O6JBvHeBdc7k6wu4dUZVJ8
+ -  country: Namibia
+    environment: testing
+    main_file_url: https://docs.google.com/spreadsheets/d/13G808M06ckYxtj6x9CarQ_y36j_hOdAv5RlL2Qd1h5A
+    mirror_file_url: https://docs.google.com/spreadsheets/d/1ne1sYUlOMWiALLvkSfoOAK2yTv7jbD8t0Sovf7oAR8A
