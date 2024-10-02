@@ -551,7 +551,7 @@ sheets_get_background = function(file_id, sheet, range, nonwhite = TRUE) {
 sheets_request = function(file_id, sheet_id, d, bod_base) {
   d = copy(d)
   set(d, j = 'sheet_id', value = sheet_id)
-  d[, bod := glue(bod_base, .envir = .SD, .open = '(', .close = ')')]
+  d[, bod := glue_data(bod_base, .x = .SD, .open = '(', .close = ')')]
   bod = sprintf('{"requests": [%s]}', paste(d$bod, collapse = ',\n'))
 
   request = googlesheets4::request_generate(
