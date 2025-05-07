@@ -34,4 +34,12 @@ systems:
     environment: testing
     main_file_url: https://docs.google.com/spreadsheets/d/13G808M06ckYxtj6x9CarQ_y36j_hOdAv5RlL2Qd1h5A
     mirror_file_url: https://docs.google.com/spreadsheets/d/1ne1sYUlOMWiALLvkSfoOAK2yTv7jbD8t0Sovf7oAR8A
-    
+  - country: Philippines
+    environment: production
+    main_file_url: https://docs.google.com/spreadsheets/d/1oD6LTtOM1rigC8sWnEqM4IeIYaZwPRRv3LPnIfNin9k
+    mirror_file_url: https://docs.google.com/spreadsheets/d/1ZkNEjkrbe_H3aB-_Ph6cOxJsxtOWo0ftZ46mv4c6Kcc
+ -  country: Philippines
+    environment: testing
+    main_file_url: https://docs.google.com/spreadsheets/d/1xErfoYZqq6Y6meMKD36lELqEFV9idRw9Mmau5HQb0ZI
+    mirror_file_url: https://docs.google.com/spreadsheets/d/1gVHPHkt-2FMlMWIau7WMKtIK9NTb7ZHCpft8pTJ2noA
+
