@@ -57,7 +57,7 @@ jobs:
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: Facilitator Database ${{ inputs.country }} ${{ inputs.environment }}
           to: ${{ env.EMAIL_TO }}
-          from: Youth Impact Data Traffic
+          from: Youth Impact Data Traffic <${{ secrets.MAIL_USERNAME }}>
           body: |
             Hello there!
 
